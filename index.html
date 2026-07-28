@@ -2905,19 +2905,26 @@
             justify-content: center;
             min-width: 0;
         }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+            min-width: 98px;
+        }
         .brand-header {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 0;
             min-width: 0;
         }
         .logo-orbit {
             position: relative;
-            width: 96px;
-            height: 96px;
-            flex: 0 0 96px;
+            width: 98px;
+            height: 98px;
+            flex: 0 0 98px;
             display: grid;
             place-items: center;
             filter: drop-shadow(0 6px 12px rgba(0,0,0,.22));
@@ -2934,9 +2941,9 @@
         .brand-ring-text {
             font-family: 'Cairo', sans-serif;
             font-weight: 900;
-            font-size: 15px;
+            font-size: 14px;
             fill: #f3dfb0;
-            letter-spacing: 1px;
+            letter-spacing: 2.3px;
             text-shadow: 0 0 3px rgba(0,0,0,.55);
         }
         .title-area .logo-img {
@@ -2963,8 +2970,8 @@
         }
 
         .qibla-widget {
-            width: 58px;
-            min-width: 58px;
+            width: 46px;
+            min-width: 46px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -3061,11 +3068,45 @@
             text-align: center;
             white-space: nowrap;
             font-family: 'Orbitron', 'Cairo', sans-serif;
-            font-size: .48rem;
+            font-size: .46rem;
             font-weight: 900;
-            line-height: 1;
+            line-height: 1.05;
             color: #f6e6b5;
             text-shadow: 0 0 2px rgba(0,0,0,.7);
+        }
+
+        .qibla-face {
+            width: 42px;
+            height: 42px;
+            border-width: 1.8px;
+        }
+        .qibla-cardinal {
+            font-size: 6.6px;
+        }
+        .qibla-cardinal.q-n { top: 3px; }
+        .qibla-cardinal.q-e { right: 4px; }
+        .qibla-cardinal.q-s { bottom: 3px; }
+        .qibla-cardinal.q-w { left: 4px; }
+        .qibla-needle {
+            width: 1.8px;
+            height: 15px;
+        }
+        .qibla-needle::before {
+            top: -6px;
+            border-left-width: 4px;
+            border-right-width: 4px;
+            border-bottom-width: 8px;
+        }
+        .qibla-center-dot {
+            width: 4px;
+            height: 4px;
+        }
+        .qibla-caption {
+            font-size: .34rem;
+            margin-top: 1px;
+        }
+        .menu-btn, .qibla-widget {
+            flex-shrink: 0;
         }
         .qibla-widget.needs-location .qibla-caption {
             font-size: .40rem;
@@ -3078,24 +3119,87 @@
         }
 
         @media (max-width: 380px) {
-            .brand-header { gap: 6px; }
-            .logo-orbit { width: 86px; height: 86px; flex-basis: 86px; }
+            .logo-orbit { width: 88px; height: 88px; flex-basis: 88px; }
             .title-area .logo-img { width: 52px !important; height: 52px !important; }
-            .brand-ring-text { font-size: 13px; }
-            .qibla-widget { width: 50px; min-width: 50px; }
-            .qibla-face { width: 46px; height: 46px; }
-            .qibla-cardinal { font-size: 7px; }
-            .qibla-caption { font-size: .42rem; }
+            .brand-ring-text { font-size: 12px; letter-spacing: 1.8px; }
+            .header-actions { min-width: 86px; gap: 4px; }
+            .qibla-widget { width: 42px; min-width: 42px; }
+            .qibla-face { width: 38px; height: 38px; }
+            .qibla-cardinal { font-size: 6px; }
+            .qibla-caption { font-size: .31rem; }
         }
         @media (max-height: 650px) {
-            .logo-orbit { width: 80px; height: 80px; flex-basis: 80px; }
+            .logo-orbit { width: 82px; height: 82px; flex-basis: 82px; }
             .title-area .logo-img { width: 48px !important; height: 48px !important; border-radius: 15px !important; }
-            .brand-ring-text { font-size: 12px; }
-            .qibla-widget { width: 46px; min-width: 46px; gap: 3px; }
-            .qibla-face { width: 42px; height: 42px; }
-            .qibla-needle { height: 15px; }
-            .qibla-cardinal { font-size: 6.5px; }
-            .qibla-caption { font-size: .38rem; }
+            .brand-ring-text { font-size: 11px; letter-spacing: 1.6px; }
+            .header-actions { min-width: 80px; gap: 4px; }
+            .qibla-widget { width: 40px; min-width: 40px; gap: 2px; }
+            .qibla-face { width: 36px; height: 36px; }
+            .qibla-needle { height: 13px; }
+            .qibla-cardinal { font-size: 5.7px; }
+            .qibla-caption { font-size: .29rem; }
+        }
+
+
+        /* إصلاح ظهور زر المينيو بجانب بوصلة القبلة */
+        .top-row {
+            direction: ltr;
+            grid-template-columns: 88px minmax(0, 1fr) 100px !important;
+            overflow: visible !important;
+        }
+        .clock-container,
+        .title-area,
+        .header-actions {
+            min-width: 0;
+        }
+        .clock-container { grid-column: 1; }
+        .title-area { grid-column: 2; }
+        .header-actions {
+            grid-column: 3;
+            width: 100%;
+            min-width: 100px;
+            direction: ltr;
+            justify-content: flex-end;
+            overflow: visible;
+            position: relative;
+            z-index: 8;
+        }
+        .header-actions .qibla-widget { order: 1; }
+        .header-actions .menu-btn {
+            order: 2;
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            flex: 0 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        header { overflow: visible !important; }
+
+        @media (max-width: 380px) {
+            .top-row { grid-template-columns: 78px minmax(0, 1fr) 90px !important; }
+            .header-actions { min-width: 90px; }
+        }
+        @media (max-height: 650px) {
+            .top-row { grid-template-columns: 72px minmax(0, 1fr) 82px !important; }
+            .header-actions { min-width: 82px; }
+        }
+        @media (max-width: 340px) {
+            .top-row { grid-template-columns: 70px minmax(0, 1fr) 78px !important; }
+            .header-actions { min-width: 78px; gap: 3px; }
+            .header-actions .menu-btn {
+                width: 34px !important;
+                height: 34px !important;
+                min-height: 34px !important;
+            }
+            .header-actions .qibla-widget {
+                width: 39px;
+                min-width: 39px;
+            }
+            .header-actions .qibla-face {
+                width: 35px;
+                height: 35px;
+            }
         }
 
     </style>
@@ -3289,26 +3393,13 @@
                 </div>
                 <div class="title-area">
                     <div class="brand-header">
-                        <button class="qibla-widget" id="qiblaWidget" type="button" aria-label="بوصلة القبلة" title="بوصلة القبلة">
-                            <div class="qibla-face">
-                                <div class="qibla-rose" id="qiblaRose" aria-hidden="true">
-                                    <span class="qibla-cardinal q-n">N</span>
-                                    <span class="qibla-cardinal q-e">E</span>
-                                    <span class="qibla-cardinal q-s">S</span>
-                                    <span class="qibla-cardinal q-w">W</span>
-                                </div>
-                                <div class="qibla-needle" id="qiblaNeedle" aria-hidden="true"></div>
-                                <div class="qibla-center-dot" aria-hidden="true"></div>
-                            </div>
-                            <span class="qibla-caption" id="qiblaValue">...</span>
-                        </button>
                         <div class="logo-orbit" id="logoOrbit">
                             <svg class="brand-ring" viewBox="0 0 180 180" aria-hidden="true" focusable="false">
                                 <defs>
-                                    <path id="brandRingPath" d="M 90,90 m -68,0 a 68,68 0 1,1 136,0 a 68,68 0 1,1 -136,0"></path>
+                                    <path id="brandRingPath" d="M 90,90 m -66,0 a 66,66 0 1,1 132,0 a 66,66 0 1,1 -132,0"></path>
                                 </defs>
                                 <text class="brand-ring-text">
-                                    <textPath id="brandRingText" href="#brandRingPath" startOffset="50%" text-anchor="middle">مزامير داود • مزامير داود •</textPath>
+                                    <textPath id="brandRingText" href="#brandRingPath" startOffset="50%" text-anchor="middle">مزامير داود</textPath>
                                 </text>
                             </svg>
                             <img id="logoImg" class="logo-img" src="" alt="شعار التطبيق" style="display:none;">
@@ -3316,7 +3407,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></div>
+                <div class="header-actions">
+                    <button class="qibla-widget" id="qiblaWidget" type="button" aria-label="بوصلة القبلة" title="بوصلة القبلة">
+                        <div class="qibla-face">
+                            <div class="qibla-rose" id="qiblaRose" aria-hidden="true">
+                                <span class="qibla-cardinal q-n">N</span>
+                                <span class="qibla-cardinal q-e">E</span>
+                                <span class="qibla-cardinal q-s">S</span>
+                                <span class="qibla-cardinal q-w">W</span>
+                            </div>
+                            <div class="qibla-needle" id="qiblaNeedle" aria-hidden="true"></div>
+                            <div class="qibla-center-dot" aria-hidden="true"></div>
+                        </div>
+                        <span class="qibla-caption" id="qiblaValue">...</span>
+                    </button>
+                    <div class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></div>
+                </div>
             </div>
 
             <div class="reciter-surah-bar">
@@ -4284,6 +4390,20 @@
                 return ((number % 360) + 360) % 360;
             }
 
+            function shortestAngleDelta(fromValue, toValue) {
+                return ((toValue - fromValue + 540) % 360) - 180;
+            }
+
+            function getScreenOrientationAngle() {
+                if (window.screen?.orientation && typeof window.screen.orientation.angle === 'number') {
+                    return normalizeDegrees(window.screen.orientation.angle);
+                }
+                if (typeof window.orientation === 'number') {
+                    return normalizeDegrees(window.orientation);
+                }
+                return 0;
+            }
+
             function calculateQiblaBearing(lat, lng) {
                 const phi = lat * Math.PI / 180;
                 const lambda = lng * Math.PI / 180;
@@ -4297,7 +4417,7 @@
             function renderBrandRingText() {
                 const appName = (typeof t === 'function' ? t('appName') : null) || (appLanguage === 'ar' ? 'مزامير داود' : 'Mazamir Daoud');
                 const brandRingText = document.getElementById('brandRingText');
-                if (brandRingText) brandRingText.textContent = `${appName} • ${appName} •`;
+                if (brandRingText) brandRingText.textContent = appName;
             }
 
             function updateQiblaVisuals() {
@@ -4318,13 +4438,12 @@
 
                 const qiblaLabel = appLanguage === 'ar' ? 'بوصلة القبلة' : 'Qibla compass';
                 if (!isFiniteCoordinate(userLat) || !isFiniteCoordinate(userLng) || qiblaBearing == null) {
-                    const noLocation = appLanguage === 'ar' ? 'فعّل GPS' : 'Enable GPS';
-                    value.textContent = noLocation;
+                    value.textContent = appLanguage === 'ar' ? 'فعّل GPS' : 'Enable GPS';
                     widget.classList.add('needs-location');
                     widget.setAttribute('aria-label', qiblaLabel);
                     widget.title = appLanguage === 'ar'
-                        ? 'فعّل الموقع لتحديد اتجاه القبلة، ثم اضغط لتشغيل البوصلة.'
-                        : 'Enable location to determine the Qibla, then tap to activate the compass.';
+                        ? 'فعّل الموقع أولاً ليتم حساب اتجاه القبلة.'
+                        : 'Enable location first so the Qibla direction can be calculated.';
                     updateQiblaVisuals();
                     return;
                 }
@@ -4334,8 +4453,8 @@
                 widget.classList.remove('needs-location');
                 widget.setAttribute('aria-label', `${qiblaLabel} ${degreeText}`);
                 widget.title = appLanguage === 'ar'
-                    ? `${qiblaLabel}: ${degreeText}${qiblaSensorActive ? ' — وجّه أعلى الهاتف نحو السهم.' : ' — اضغط لتفعيل مستشعر الاتجاه.'}`
-                    : `${qiblaLabel}: ${degreeText}${qiblaSensorActive ? ' — Point the top of the phone toward the arrow.' : ' — Tap to activate orientation.'}`;
+                    ? `${qiblaLabel}: ${degreeText}${qiblaSensorActive ? ' — وجّه أعلى الهاتف إلى الأمام وحرّكه ببطء حتى يستقر السهم على القبلة.' : ' — اضغط لتفعيل حساس الاتجاه.'}`
+                    : `${qiblaLabel}: ${degreeText}${qiblaSensorActive ? ' — Move the phone slowly until the arrow points to the Qibla.' : ' — Tap to activate orientation.'}`;
                 updateQiblaVisuals();
             }
 
@@ -4352,16 +4471,27 @@
                 if (typeof event.webkitCompassHeading === 'number' && !Number.isNaN(event.webkitCompassHeading)) {
                     return normalizeDegrees(event.webkitCompassHeading);
                 }
-                if (typeof event.alpha === 'number' && !Number.isNaN(event.alpha)) {
-                    return normalizeDegrees(360 - event.alpha);
+
+                if (event.absolute === false && (typeof event.alpha !== 'number' || Number.isNaN(event.alpha))) {
+                    return null;
                 }
-                return null;
+                if (typeof event.alpha !== 'number' || Number.isNaN(event.alpha)) {
+                    return null;
+                }
+
+                const screenAngle = getScreenOrientationAngle();
+                let heading = 360 - event.alpha;
+                heading = normalizeDegrees(heading + screenAngle);
+                return heading;
             }
 
             function handleQiblaOrientation(event) {
                 const heading = extractCompassHeading(event);
                 if (heading == null) return;
-                qiblaHeading = heading;
+
+                const previous = normalizeDegrees(qiblaHeading);
+                const factor = qiblaSensorActive ? 0.22 : 1;
+                qiblaHeading = normalizeDegrees(previous + shortestAngleDelta(previous, heading) * factor);
                 qiblaSensorActive = true;
                 updateQiblaTexts();
             }
@@ -4372,6 +4502,7 @@
                     updateQiblaTexts();
                     return;
                 }
+
                 try {
                     if (typeof DeviceOrientationEvent.requestPermission === 'function') {
                         if (!forcePrompt) {
@@ -4385,6 +4516,7 @@
                             return;
                         }
                     }
+
                     window.removeEventListener('deviceorientationabsolute', handleQiblaOrientation, true);
                     window.removeEventListener('deviceorientation', handleQiblaOrientation, true);
                     window.addEventListener('deviceorientationabsolute', handleQiblaOrientation, true);
@@ -4392,24 +4524,40 @@
                 } catch (error) {
                     console.warn('Qibla compass unavailable:', error);
                 }
+
                 updateQiblaTexts();
+            }
+
+            async function activateQiblaWidget() {
+                const locationIsStale = !userLocationUpdatedAt || (Date.now() - userLocationUpdatedAt > LOCATION_CACHE_MAX_AGE);
+                if (!isFiniteCoordinate(userLat) || !isFiniteCoordinate(userLng) || locationIsStale) {
+                    try {
+                        await updateLocationAutomatically();
+                    } catch (error) {
+                        console.warn('Qibla location update failed:', error);
+                    }
+                }
+                updateQiblaFromLocation();
+                await enableQiblaCompass(true);
             }
 
             function setupQiblaCompass() {
                 const widget = document.getElementById('qiblaWidget');
                 if (widget && !qiblaCompassBound) {
                     qiblaCompassBound = true;
-                    widget.addEventListener('click', () => enableQiblaCompass(true));
+                    widget.addEventListener('click', activateQiblaWidget);
                     widget.addEventListener('keydown', (event) => {
                         if (event.key === 'Enter' || event.key === ' ') {
                             event.preventDefault();
-                            enableQiblaCompass(true);
+                            activateQiblaWidget();
                         }
                     });
                 }
                 renderBrandRingText();
                 updateQiblaFromLocation();
                 enableQiblaCompass(false);
+                window.addEventListener('orientationchange', updateQiblaVisuals, { passive: true });
+                window.screen?.orientation?.addEventListener?.('change', updateQiblaVisuals);
             }
 
             function loadLogo() {
