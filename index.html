@@ -5,7 +5,7 @@
 <head>
     <!--
       عند تغليف الملف بـ Capacitor على Android:
-      ثبّت @capacitor/app و@capacitor/geolocation و@capacitor/local-notifications.
+      ثبّت @capacitor/app و@capacitor/geolocation و@capacitor/local-notifications و@capacitor/share.
       يحتاج AndroidManifest.xml إلى INTERNET وACCESS_COARSE_LOCATION
       وACCESS_FINE_LOCATION وPOST_NOTIFICATIONS (Android 13+).
       أضف SCHEDULE_EXACT_ALARM إذا أردت تنبيهات صلاة دقيقة على Android 12+.
@@ -2822,49 +2822,79 @@
             font-size: .67rem;
             font-weight: 900;
         }
-        .about-share-title {
-            margin: 14px 0 8px;
-            color: var(--text-1);
-            font-size: .72rem;
-            font-weight: 900;
-        }
-        .about-share-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .about-share-btn {
-            min-height: 46px;
-            padding: 8px 9px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            border: 1px solid var(--line);
-            border-radius: 13px;
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
-            font-size: .68rem;
-            font-weight: 900;
-            line-height: 1.3;
-            cursor: pointer;
-        }
-        .about-share-btn.whatsapp {
-            border-color: rgba(37, 211, 102, .42);
-            background: rgba(37, 211, 102, .13);
-            color: #9ef0bd;
-        }
-        .about-share-btn.system {
-            border-color: rgba(var(--islamic-lapis-rgb), .42);
-            background: rgba(var(--islamic-lapis-rgb), .13);
-            color: #bdd1ff;
-        }
-        .about-share-btn:active,
         .about-close-btn:active { transform: scale(.96); }
         @media (max-width: 360px) {
             .about-modal-card { padding: 17px 13px; }
-            .about-share-actions { grid-template-columns: 1fr; }
             .about-description { font-size: .67rem; }
+        }
+
+
+        /* زر مشاركة دائم في الواجهة الرئيسية */
+        .bottom-footer-row {
+            min-width: 0;
+            min-height: 28px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 6px;
+            padding-inline: 2px;
+        }
+        .bottom-footer-row .dua-text {
+            min-width: 0;
+            margin: 0;
+            padding: 2px 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: start;
+        }
+        .main-share-btn {
+            min-width: 82px;
+            min-height: 30px;
+            padding: 4px 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 1px solid rgba(var(--islamic-turquoise-rgb), .42);
+            border-radius: 10px;
+            background:
+                linear-gradient(145deg, rgba(var(--islamic-turquoise-rgb), .13), rgba(4, 24, 21, .86));
+            color: #a9f0e7;
+            font-family: 'Cairo', sans-serif;
+            font-size: .56rem;
+            font-weight: 900;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .20);
+            white-space: nowrap;
+        }
+        .main-share-btn i {
+            color: var(--islamic-turquoise);
+            font-size: .72rem;
+        }
+        .main-share-btn:active { transform: scale(.95); }
+        @media (hover: hover) {
+            .main-share-btn:hover {
+                border-color: var(--islamic-gold);
+                color: #fff0bd;
+                background: rgba(var(--islamic-gold-rgb), .11);
+            }
+        }
+        @media (max-height: 650px) {
+            .bottom-footer-row { min-height: 24px; gap: 4px; }
+            .main-share-btn {
+                min-width: 68px;
+                min-height: 24px;
+                padding: 2px 7px;
+                border-radius: 8px;
+                font-size: .43rem;
+            }
+            .main-share-btn i { font-size: .58rem; }
+        }
+        @media (max-width: 340px) {
+            .main-share-btn { min-width: 30px; width: 30px; padding: 0; }
+            .main-share-btn span { display: none; }
         }
 
     </style>
@@ -2904,15 +2934,6 @@
             </div>
             <div class="about-developer" id="aboutDeveloperText">صنع وبرمجة أبو إياد</div>
             <div class="about-no-ads" id="aboutNoAdsText">مجاني بالكامل وبدون إعلانات</div>
-            <div class="about-share-title" id="aboutShareTitle">ساهم في نشر الخير وشارك التطبيق</div>
-            <div class="about-share-actions">
-                <button class="about-share-btn whatsapp" id="shareWhatsAppBtn" type="button">
-                    <i class="fab fa-whatsapp"></i><span id="shareWhatsAppLabel">مشاركة عبر واتساب</span>
-                </button>
-                <button class="about-share-btn system" id="shareAppsBtn" type="button">
-                    <i class="fas fa-share-nodes"></i><span id="shareAppsLabel">مشاركة عبر التطبيقات</span>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -3157,7 +3178,13 @@
             <div class="time-box"><span id="current-time">00:00</span><span id="duration-time">00:00</span></div>
         </article>
 
-        <div class="dua-text" id="duaText"><i class="fas fa-hands-praying"></i> اضغط على زر <i class="fas fa-bars"></i> لفتح القائمة</div>
+        <div class="bottom-footer-row">
+            <div class="dua-text" id="duaText"><i class="fas fa-hands-praying"></i> اضغط على زر <i class="fas fa-bars"></i> لفتح القائمة</div>
+            <button class="main-share-btn" id="mainShareBtn" type="button" aria-label="مشاركة التطبيق">
+                <i class="fas fa-share-nodes" aria-hidden="true"></i>
+                <span id="mainShareLabel">مشاركة</span>
+            </button>
+        </div>
     </main>
 
     <script>
@@ -3317,6 +3344,7 @@
                     aboutShareTitle: 'ساهم في نشر الخير وشارك التطبيق',
                     shareWhatsApp: 'مشاركة عبر واتساب',
                     shareApps: 'مشاركة عبر التطبيقات',
+                    mainShare: 'مشاركة',
                     shareMessage: 'تطبيق مزامير داود للقرآن الكريم — صدقة جارية مجانية بدون إعلانات، من صنع وبرمجة أبو إياد. استمع إلى القرآن، تابع الآيات، وتعرّف على أوقات الصلاة.',
                     shareCopied: 'تم نسخ رسالة مشاركة التطبيق',
                     shareUnavailable: 'تعذرت المشاركة على هذا الجهاز',
@@ -3502,6 +3530,7 @@
                     aboutShareTitle: 'Help spread goodness by sharing the app',
                     shareWhatsApp: 'Share on WhatsApp',
                     shareApps: 'Share with other apps',
+                    mainShare: 'Share',
                     shareMessage: 'Mazamir Dawood Quran app — an ongoing charity, free and ad-free, designed and programmed by Abu Iyad. Listen to the Quran, follow verses, and view prayer times.',
                     shareCopied: 'The app sharing message was copied',
                     shareUnavailable: 'Sharing is unavailable on this device',
@@ -3602,9 +3631,8 @@
                 setLocalizedText('aboutFeatureTools', 'aboutFeatureTools');
                 setLocalizedText('aboutDeveloperText', 'aboutDeveloper');
                 setLocalizedText('aboutNoAdsText', 'aboutNoAds');
-                setLocalizedText('aboutShareTitle', 'aboutShareTitle');
-                setLocalizedText('shareWhatsAppLabel', 'shareWhatsApp');
-                setLocalizedText('shareAppsLabel', 'shareApps');
+                setLocalizedText('mainShareLabel', 'mainShare');
+                document.getElementById('mainShareBtn')?.setAttribute('aria-label', t('shareApps'));
                 document.getElementById('closeAboutModalBtn')?.setAttribute('aria-label', t('closeAria'));
                 setLocalizedHtml('drawerNote', 'dhikr', '<i class="fas fa-hands-praying"></i>');
                 setLocalizedHtml('cityModalTitle', 'chooseLocation', '<i class="fas fa-map-marker-alt"></i>');
@@ -6123,8 +6151,7 @@
 
             function getAppSharePayload() {
                 const url = getPublicAppShareUrl();
-                const text = `${t('shareMessage')}${url ? `\n${url}` : ''}`;
-                return { title: t('aboutTitle'), text, url };
+                return { title: t('aboutTitle'), text: t('shareMessage'), url };
             }
 
             function openAboutModal() {
@@ -6139,7 +6166,19 @@
 
             async function shareAppWithSystem() {
                 const payload = getAppSharePayload();
+                const fullText = payload.url ? `${payload.text}
+${payload.url}` : payload.text;
                 try {
+                    const nativeShare = getCapacitorPlugin('Share');
+                    if (nativeShare?.share) {
+                        await nativeShare.share({
+                            title: payload.title,
+                            text: payload.text,
+                            url: payload.url || undefined,
+                            dialogTitle: t('shareApps')
+                        });
+                        return;
+                    }
                     if (navigator.share) {
                         const shareData = { title: payload.title, text: payload.text };
                         if (payload.url) shareData.url = payload.url;
@@ -6147,21 +6186,15 @@
                         return;
                     }
                     if (navigator.clipboard?.writeText) {
-                        await navigator.clipboard.writeText(payload.text);
+                        await navigator.clipboard.writeText(fullText);
                         showToast(t('shareCopied'));
                         return;
                     }
                 } catch (error) {
-                    if (error?.name === 'AbortError') return;
+                    if (error?.name === 'AbortError' || String(error?.message || '').toLowerCase().includes('cancel')) return;
+                    console.warn('App sharing failed:', error);
                 }
                 showToast(t('shareUnavailable'));
-            }
-
-            function shareAppOnWhatsApp() {
-                const payload = getAppSharePayload();
-                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(payload.text)}`;
-                const opened = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-                if (!opened) window.location.href = whatsappUrl;
             }
 
             document.getElementById('drawerAbout').onclick = openAboutModal;
@@ -6169,8 +6202,7 @@
             document.getElementById('aboutModal').onclick = event => {
                 if (event.target.id === 'aboutModal') closeAboutModal();
             };
-            document.getElementById('shareWhatsAppBtn').onclick = shareAppOnWhatsApp;
-            document.getElementById('shareAppsBtn').onclick = shareAppWithSystem;
+            document.getElementById('mainShareBtn').onclick = shareAppWithSystem;
             document.addEventListener('keydown', event => {
                 if (event.key === 'Escape' && document.getElementById('aboutModal')?.classList.contains('active')) {
                     closeAboutModal();
