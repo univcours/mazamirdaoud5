@@ -3029,9 +3029,11 @@
         .qibla-needle {
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: auto;
+            bottom: 50%;
             width: 2px;
             height: 19px;
+            margin-bottom: 0;
             transform: translateX(-50%) rotate(0deg);
             transform-origin: 50% 100%;
             border-radius: 999px;
@@ -3090,6 +3092,7 @@
         .qibla-needle {
             width: 1.8px;
             height: 15px;
+            bottom: 50%;
         }
         .qibla-needle::before {
             top: -6px;
@@ -3135,7 +3138,7 @@
             .header-actions { min-width: 80px; gap: 4px; }
             .qibla-widget { width: 40px; min-width: 40px; gap: 2px; }
             .qibla-face { width: 36px; height: 36px; }
-            .qibla-needle { height: 13px; }
+            .qibla-needle { bottom: 50%; height: 13px; }
             .qibla-cardinal { font-size: 5.7px; }
             .qibla-caption { font-size: .29rem; }
         }
