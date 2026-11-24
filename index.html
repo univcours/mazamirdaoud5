@@ -3205,6 +3205,41 @@
             }
         }
 
+
+        /* Optional, user-initiated self-promotion, inside the settings drawer only. */
+        .ribh-more-apps { width: 100%; margin: 2px 0; color: #f4e5c5; }
+        .ribh-more-apps > summary {
+            list-style: none; display: flex; align-items: center; gap: 10px;
+            min-height: 48px; padding: 10px 12px; border: 1px solid rgba(247,183,49,.42);
+            border-radius: 16px; background: rgba(247,183,49,.10); cursor: pointer;
+            font: 700 .76rem 'Cairo', sans-serif; color: #f7d188;
+        }
+        .ribh-more-apps > summary::-webkit-details-marker { display: none; }
+        .ribh-more-apps > summary:focus-visible, .ribh-more-app-link:focus-visible {
+            outline: 3px solid #f7b731; outline-offset: 2px;
+        }
+        .ribh-more-apps > summary span { flex: 1; text-align: right; }
+        .ribh-more-apps > summary small { display: inline; font-size: .58rem; color: #c9bc9e; }
+        .ribh-more-apps-chevron { transition: transform .2s ease; }
+        .ribh-more-apps[open] .ribh-more-apps-chevron { transform: rotate(180deg); }
+        .ribh-more-apps-list { display: grid; gap: 8px; padding-top: 10px; }
+        .ribh-more-app-link {
+            display: flex; flex-direction: row; align-items: center; gap: 8px;
+            padding: 10px 8px; min-height: 60px; text-decoration: none;
+            border-radius: 13px; border: 1px solid rgba(255,255,255,.13);
+            background: #1b202b; color: #fff; direction: rtl;
+        }
+        .ribh-more-app-link:hover { background: #272e3b; border-color: rgba(247,183,49,.5); }
+        .ribh-more-app-icon {
+            width: 34px; height: 34px; flex: 0 0 34px; border-radius: 10px;
+            background: #453b24; color: #ffd477; display: grid; place-items: center;
+            font-size: .9rem;
+        }
+        .ribh-more-app-copy { min-width: 0; display: grid; flex: 1; gap: 1px; }
+        .ribh-more-app-copy strong { font-size: .73rem; font-weight: 800; }
+        .ribh-more-app-copy small { font-size: .59rem; color: #c9c9c9; }
+        .ribh-more-app-store { flex: 0 0 auto; font: 700 .52rem 'Cairo', sans-serif; color: #f7d188; white-space: nowrap; }
+        .ribh-more-app-store i { font-size: .58rem; margin-right: 2px; }
     </style>
 </head>
 <body>
@@ -3241,7 +3276,7 @@
                 <div class="about-feature"><i class="fas fa-sliders-h"></i><span id="aboutFeatureTools"></span></div>
             </div>
             <div class="about-developer" id="aboutDeveloperText">صنع وبرمجة أبو إياد</div>
-            <div class="about-no-ads" id="aboutNoAdsText">مجاني بالكامل وبدون إعلانات</div>
+            <div class="about-no-ads" id="aboutNoAdsText">مجاني بالكامل، مع روابط اختيارية لتطبيقاتنا الأخرى</div>
         </div>
     </div>
 
@@ -3313,6 +3348,40 @@
                 <div class="drawer-grid">
                     <div class="drawer-btn" id="drawerRefreshGitHub">تحديث الصور من GitHub</div>
                 </div>
+            </div>
+
+            <!-- RibhLab-owned apps: user-initiated "More Apps" in the main menu, no ad SDK or forced popups. -->
+            <div class="drawer-section" id="ribhMoreAppsSection">
+                <details class="ribh-more-apps" id="ribhMoreApps">
+                    <summary id="ribhMoreAppsToggle" aria-label="المزيد من تطبيقاتنا - More apps">
+                        <i class="fas fa-th-large" aria-hidden="true"></i>
+                        <span>المزيد من تطبيقاتنا <small lang="en">More apps</small></span>
+                        <i class="fas fa-chevron-down ribh-more-apps-chevron" aria-hidden="true"></i>
+                    </summary>
+                    <div class="ribh-more-apps-list" aria-label="تطبيقات أخرى من مطور مزامير داود">
+                        <a class="ribh-more-app-link" data-ribh-more-app="rivoscan"
+                           href="https://play.google.com/store/apps/details?id=com.ribhlab.rivoscan"
+                           target="_blank" rel="noopener noreferrer" aria-label="RivoScan - افتح التطبيق على Google Play">
+                            <span class="ribh-more-app-icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
+                            <span class="ribh-more-app-copy"><strong>RivoScan</strong><small>مسح وإدارة مستندات PDF</small></span>
+                            <span class="ribh-more-app-store" aria-hidden="true">Google Play <i class="fas fa-external-link-alt"></i></span>
+                        </a>
+                        <a class="ribh-more-app-link" data-ribh-more-app="tradingfiew"
+                           href="https://play.google.com/store/apps/details?id=com.ribhlab.tradingfiew"
+                           target="_blank" rel="noopener noreferrer" aria-label="TradingFiew - افتح التطبيق على Google Play">
+                            <span class="ribh-more-app-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+                            <span class="ribh-more-app-copy"><strong>TradingFiew</strong><small>متابعة أدوات الأسواق المالية</small></span>
+                            <span class="ribh-more-app-store" aria-hidden="true">Google Play <i class="fas fa-external-link-alt"></i></span>
+                        </a>
+                        <a class="ribh-more-app-link" data-ribh-more-app="novagrid"
+                           href="https://play.google.com/store/apps/details?id=com.novagrid.cosmicpuzzle"
+                           target="_blank" rel="noopener noreferrer" aria-label="NovaGrid - افتح التطبيق على Google Play">
+                            <span class="ribh-more-app-icon" aria-hidden="true"><i class="fas fa-puzzle-piece"></i></span>
+                            <span class="ribh-more-app-copy"><strong>NovaGrid</strong><small>لعبة ألغاز ممتعة</small></span>
+                            <span class="ribh-more-app-store" aria-hidden="true">Google Play <i class="fas fa-external-link-alt"></i></span>
+                        </a>
+                    </div>
+                </details>
             </div>
             <div class="drawer-section">
                 <div class="drawer-btn" id="drawerAbout">📡 عن التطبيق</div>
@@ -3675,12 +3744,12 @@
                     aboutFeaturePrayer: 'حساب أوقات الصلاة حسب المدينة أو الموقع الدقيق.',
                     aboutFeatureTools: 'حفظ التقدم، مؤقت النوم، التكرار وأدوات ضبط التزامن.',
                     aboutDeveloper: 'صنع وبرمجة أبو إياد',
-                    aboutNoAds: 'مجاني بالكامل وبدون إعلانات',
+                    aboutNoAds: 'مجاني بالكامل، مع روابط اختيارية لتطبيقاتنا الأخرى',
                     aboutShareTitle: 'ساهم في نشر الخير وشارك التطبيق',
                     shareWhatsApp: 'مشاركة عبر واتساب',
                     shareApps: 'مشاركة عبر التطبيقات',
                     mainShare: 'مشاركة',
-                    shareMessage: 'تطبيق مزامير داود للقرآن الكريم — صدقة جارية مجانية بدون إعلانات، من صنع وبرمجة أبو إياد. استمع إلى القرآن، تابع الآيات، وتعرّف على أوقات الصلاة.',
+                    shareMessage: 'تطبيق مزامير داود للقرآن الكريم — صدقة جارية مجانية مع روابط اختيارية لتطبيقات المطور الأخرى، من صنع وبرمجة أبو إياد. استمع إلى القرآن، تابع الآيات، وتعرّف على أوقات الصلاة.',
                     shareCopied: 'تم نسخ رسالة مشاركة التطبيق',
                     shareUnavailable: 'تعذرت المشاركة على هذا الجهاز',
                     sleepStopped: '⏰ توقف التشغيل بعد {minutes} دقيقة',
@@ -3861,12 +3930,12 @@
                     aboutFeaturePrayer: 'Calculate prayer times using a city or precise location.',
                     aboutFeatureTools: 'Save progress, use a sleep timer, repeat and synchronization tools.',
                     aboutDeveloper: 'Designed and programmed by Abu Iyad',
-                    aboutNoAds: 'Completely free and ad-free',
+                    aboutNoAds: 'Free, with optional links to our other apps',
                     aboutShareTitle: 'Help spread goodness by sharing the app',
                     shareWhatsApp: 'Share on WhatsApp',
                     shareApps: 'Share with other apps',
                     mainShare: 'Share',
-                    shareMessage: 'Mazamir Dawood Quran app — an ongoing charity, free and ad-free, designed and programmed by Abu Iyad. Listen to the Quran, follow verses, and view prayer times.',
+                    shareMessage: 'Mazamir Dawood Quran app — an ongoing charity, free, with optional links to our other apps, designed and programmed by Abu Iyad. Listen to the Quran, follow verses, and view prayer times.',
                     shareCopied: 'The app sharing message was copied',
                     shareUnavailable: 'Sharing is unavailable on this device',
                     sleepStopped: '⏰ Playback stopped after {minutes} minutes',
@@ -6973,6 +7042,24 @@ ${payload.url}` : payload.text;
             setupAndroidBridge();
 
         })();
+    </script>
+
+    <script>
+        // No ad network, tracking or auto-display: Google Play self-promotion from the settings menu.
+        document.querySelectorAll('[data-ribh-more-app]').forEach(function (link) {
+            link.addEventListener('click', async function (event) {
+                var url = link.href;
+                var browser = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser;
+                if (browser && typeof browser.open === 'function') {
+                    event.preventDefault();
+                    try {
+                        await browser.open({ url: url });
+                    } catch (error) {
+                        window.location.assign(url);
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
